@@ -1,0 +1,16 @@
+body {
+  background-color: rgb(187, 218, 255);
+}
+
+.scoreBox {
+  margin-top: 20px;
+  padding-left: 10px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#seconds,
+#secondsLeft {
+  font-size: 25px;
+}
