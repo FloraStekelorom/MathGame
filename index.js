@@ -1,6 +1,7 @@
 var signArray = ['+'];
 var timeLeft = 10;
 var interval;
+var score = 0;
 
 $(document).on('change','.form-check-input', function(event) {
   if (this.checked) {
@@ -39,6 +40,7 @@ var checkAnswer = function (answer, equationAnswer) {
     newEquation();
     $('#answer').val('');
     addSecond(+1);
+    updateScore(+1);
   }
 }
 
@@ -51,6 +53,8 @@ var startGame = function () {
   if (!interval) {
     if (timeLeft === 0) {
       addSecond(+10);
+      score = 0;
+      updateScore(0);
     }
     interval = setInterval (function () {
       addSecond(-1);
@@ -60,6 +64,11 @@ var startGame = function () {
       }
     }, 1000);
   }
+}
+
+var updateScore = function (amount) {
+  score += amount;
+  $('#currentScore').text("Current Score: " + score);
 }
 
 $(document).ready(function() {
