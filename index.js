@@ -28,16 +28,24 @@ var generateRandomEquation = function () {
   var b = Math.floor(Math.random()*equationLimit);
   var sign = generateEquationSign();
   equation.question = String(a) + sign + String(b);
-  // to be orrected as the sign needs to change
-  equation.answer = a + b;
+
+  if (sign == '+') {
+      equation.answer = a + b;
+    } else if (sign == '-') {
+      equation.answer = a - b;
+    } else if (sign =='x') {
+      equation.answer = a * b;
+    } else if (sign == '/') {
+      equation.answer = a /b;
+    }
+
+  console.log(equation.answer);
   $('#equation').html(equation.question);
   return equation;
 };
-
 var newEquation =  function() {
   currentEquation = generateRandomEquation();
 }
-
 var checkAnswer = function (answer, equationAnswer) {
   if (answer === equationAnswer) {
     newEquation();
@@ -46,12 +54,10 @@ var checkAnswer = function (answer, equationAnswer) {
     updateScore(+1);
   }
 }
-
 var addSecond = function (amount) {
   timeLeft += amount;
   $('#seconds').text(timeLeft);
 }
-
 var startGame = function () {
   if (!interval) {
     if (timeLeft === 0) {
@@ -61,7 +67,6 @@ var startGame = function () {
       addSecond(+10);
       score = 0;
       updateScore(0);
-
     }
     interval = setInterval (function () {
       addSecond(-1);
@@ -72,12 +77,10 @@ var startGame = function () {
     }, 1000);
   }
 }
-
 var updateHighScore = function (amount) {
   highScore = amount;
   $('#highScore').text("High Score: " + highScore);
 }
-
 var updateScore = function (amount) {
   score += amount;
   $('#currentScore').text("Current Score: " + score);
@@ -85,14 +88,11 @@ var updateScore = function (amount) {
 
 $(document).ready(function() {
   currentEquation = generateRandomEquation();
-
   $('#answer').on('keyup', function(event) {
     startGame();
     checkAnswer(Number($(this).val()), currentEquation.answer);
   })
-
   $('#numberLimit').on('change', function() {
     equationLimit = $(this).val();
   })
-
 });
