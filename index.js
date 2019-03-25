@@ -2,6 +2,7 @@ var signArray = ['+'];
 var timeLeft = 10;
 var interval;
 var score = 0;
+var highScore = 0;
 
 $(document).on('change','.form-check-input', function(event) {
   if (this.checked) {
@@ -52,9 +53,13 @@ var addSecond = function (amount) {
 var startGame = function () {
   if (!interval) {
     if (timeLeft === 0) {
+      if (highScore < score) {
+        updateHighScore(score);
+      }
       addSecond(+10);
       score = 0;
       updateScore(0);
+
     }
     interval = setInterval (function () {
       addSecond(-1);
@@ -64,6 +69,11 @@ var startGame = function () {
       }
     }, 1000);
   }
+}
+
+var updateHighScore = function (amount) {
+  highScore = amount;
+  $('#highScore').text("High Score: " + highScore);
 }
 
 var updateScore = function (amount) {
