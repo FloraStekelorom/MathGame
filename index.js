@@ -30,8 +30,15 @@ var generateRandomEquation = function () {
   return equation;
 };
 
+var newEquation =  function() {
+  currentEquation = generateRandomEquation();
+}
+
 var checkAnswer = function (answer, equationAnswer) {
-  console.log(answer === equationAnswer)
+  console.log(answer === equationAnswer);
+  if (answer === equationAnswer) {
+    newEquation();
+  }
 }
 
 $(document).ready(function() {
@@ -40,7 +47,6 @@ $(document).ready(function() {
   $('#answer').on('keyup', function(event) {
     checkAnswer(Number($(this).val()), currentEquation.answer);
     $(this).val('');
-    currentEquation = generateRandomEquation();
   })
 
 
