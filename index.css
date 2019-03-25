@@ -11,6 +11,11 @@ body {
 }
 
 #seconds,
-#secondsLeft {
+#secondsLeft,
+#equation {
   font-size: 25px;
+}
+
+#equationSign {
+  width: 150px;
 }
