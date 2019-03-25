@@ -1,4 +1,5 @@
 var signArray = ['+'];
+var timeLeft = 10;
 
 $(document).on('change','.form-check-input', function(event) {
   if (this.checked) {
@@ -30,8 +31,29 @@ var generateRandomEquation = function () {
   return equation;
 };
 
+var newEquation =  function() {
+  currentEquation = generateRandomEquation();
+}
+
 var checkAnswer = function (answer, equationAnswer) {
-  console.log(answer === equationAnswer)
+  if (answer === equationAnswer) {
+    newEquation();
+    addSecond(+1);
+  }
+}
+
+var interval = setInterval (function () {
+  addSecond(-1);
+  $('#seconds').text(timeLeft);
+  if (timeLeft === 0) {
+    clearInterval(interval);
+  }
+  console.log(timeLeft);
+}, 1000);
+
+var addSecond = function (amount) {
+  timeLeft += amount;
+  $('#seconds').text(timeLeft);
 }
 
 $(document).ready(function() {
@@ -40,8 +62,6 @@ $(document).ready(function() {
   $('#answer').on('keyup', function(event) {
     checkAnswer(Number($(this).val()), currentEquation.answer);
     $(this).val('');
-    currentEquation = generateRandomEquation();
   })
-
 
 });
