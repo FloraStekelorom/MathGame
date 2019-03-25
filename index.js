@@ -3,27 +3,29 @@ var timeLeft = 10;
 var interval;
 var score = 0;
 var highScore = 0;
+var equationLimit = 10;
 
 $(document).on('change','.form-check-input', function(event) {
   if (this.checked) {
     var equationSign = $(this).next().text();
     signArray.push(equationSign);
+    console.log(signArray);
   } else {
     var equationSign = $(this).next().text();
     signArray.splice(signArray.indexOf(equationSign), 1);
+    console.log(signArray);
   }
 })
 
 var generateEquationSign = function() {
-  console.log(signArray);
   return signArray[Math.floor(Math.random()*signArray.length)]
 };
 
 var currentEquation;
 var generateRandomEquation = function () {
   var equation = {};
-  var a = Math.floor(Math.random()*10);
-  var b = Math.floor(Math.random()*10);
+  var a = Math.floor(Math.random()*equationLimit);
+  var b = Math.floor(Math.random()*equationLimit);
   var sign = generateEquationSign();
   equation.question = String(a) + sign + String(b);
   // to be orrected as the sign needs to change
@@ -87,6 +89,10 @@ $(document).ready(function() {
   $('#answer').on('keyup', function(event) {
     startGame();
     checkAnswer(Number($(this).val()), currentEquation.answer);
+  })
+
+  $('#numberLimit').on('change', function() {
+    equationLimit = $(this).val();
   })
 
 });
