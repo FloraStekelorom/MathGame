@@ -1,5 +1,6 @@
 var signArray = ['+'];
 var timeLeft = 10;
+var interval;
 
 $(document).on('change','.form-check-input', function(event) {
   if (this.checked) {
@@ -25,8 +26,6 @@ var generateRandomEquation = function () {
   equation.question = String(a) + sign + String(b);
   // to be orrected as the sign needs to change
   equation.answer = a + b;
-  console.log(equation.question);
-  console.log(equation.answer);
   $('#equation').html(equation.question);
   return equation;
 };
@@ -38,30 +37,37 @@ var newEquation =  function() {
 var checkAnswer = function (answer, equationAnswer) {
   if (answer === equationAnswer) {
     newEquation();
+    $('#answer').val('');
     addSecond(+1);
   }
 }
-
-var interval = setInterval (function () {
-  addSecond(-1);
-  $('#seconds').text(timeLeft);
-  if (timeLeft === 0) {
-    clearInterval(interval);
-  }
-  console.log(timeLeft);
-}, 1000);
 
 var addSecond = function (amount) {
   timeLeft += amount;
   $('#seconds').text(timeLeft);
 }
 
+var startGame = function () {
+  if (!interval) {
+    if (timeLeft === 0) {
+      addSecond(+10);
+    }
+    interval = setInterval (function () {
+      addSecond(-1);
+      if (timeLeft === 0) {
+        clearInterval(interval);
+        interval = undefined;
+      }
+    }, 1000);
+  }
+}
+
 $(document).ready(function() {
   currentEquation = generateRandomEquation();
 
   $('#answer').on('keyup', function(event) {
+    startGame();
     checkAnswer(Number($(this).val()), currentEquation.answer);
-    $(this).val('');
   })
 
 });
