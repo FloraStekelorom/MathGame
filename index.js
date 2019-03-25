@@ -15,15 +15,33 @@ var generateEquationSign = function() {
   return signArray[Math.floor(Math.random()*signArray.length)]
 };
 
+var currentEquation;
 var generateRandomEquation = function () {
+  var equation = {};
   var a = Math.floor(Math.random()*10);
   var b = Math.floor(Math.random()*10);
   var sign = generateEquationSign();
-  var equation = String(a) + sign + String(b);
-  console.log(equation);
-  $('#equation').html(equation);
+  equation.question = String(a) + sign + String(b);
+  // to be orrected as the sign needs to change
+  equation.answer = a + b;
+  console.log(equation.question);
+  console.log(equation.answer);
+  $('#equation').html(equation.question);
+  return equation;
 };
 
+var checkAnswer = function (answer, equationAnswer) {
+  console.log(answer === equationAnswer)
+}
+
 $(document).ready(function() {
-  generateRandomEquation();
-})
+  currentEquation = generateRandomEquation();
+
+  $('#answer').on('keyup', function(event) {
+    checkAnswer(Number($(this).val()), currentEquation.answer);
+    $(this).val('');
+    currentEquation = generateRandomEquation();
+  })
+
+
+});
