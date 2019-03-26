@@ -26,8 +26,13 @@ var generateRandomEquation = function () {
   var equation = {};
   var a = Math.floor(Math.random()*equationLimit);
   var b = Math.floor(Math.random()*equationLimit);
+  var c = a * b;
   var sign = generateEquationSign();
-  equation.question = String(a) + sign + String(b);
+  if (sign == '/') {
+    equation.question = String(c) + sign + String(a);
+  } else {
+    equation.question = String(a) + sign + String(b);
+  }
 
   if (sign == '+') {
       equation.answer = a + b;
@@ -36,7 +41,7 @@ var generateRandomEquation = function () {
     } else if (sign =='x') {
       equation.answer = a * b;
     } else if (sign == '/') {
-      equation.answer = a /b;
+      equation.answer = c / a;
     }
 
   console.log(equation.answer);
